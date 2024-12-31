@@ -1,0 +1,75 @@
+{
+    "_id": 1232421312312323,
+    "first_name": "Stewart",
+    "middle_intial": "M",
+    "last_name": "Rowley",
+    "phone_number": "509-301-0726",
+    "email": "row16006@byui.edu",
+    "linkedin_url": "www.linkedin.com/in/stewartmrowley",
+    "education": [{
+        "college": "Brigham Young University - Idaho",
+        "degree_type": "Bachelor's Degree",
+        "degree": "Software Engineering",
+        "emphasis": "Web Development",
+        "start_date": "September 2018",
+        "end_date": "December 2022",
+        "location": "Rexburg, Idaho",
+        "tools": ["HTML", "CSS", "Javascript", "React Js", "Vue Js", "Php"]
+    }],
+    "professional_experience": [{
+        "company": "Nelson Irrigation Corporation",
+        "job_title": "Software Engineering and Web Development Intern",
+        "tasks": [
+            {
+                "task_name": "Web Development",
+                "task_description": ["created custom website utilizing React Js and Node Js for customers to track past, current, and future data for over 1000 custom systems"]
+            },
+            {
+                "task_name":"Web Design",
+                "task_description": ["Created custom website that auto-populated charts and graphs to demonstrate customers water usage and output"]
+            },
+            {
+                "task_name":"Software Engineer",
+                "task_description": ["Analyzed python scripts that capture over 10,000 data points", "Utilized custom applications using complex algorithms to calculate water distribution", "Ran Python Scripts that applied information into Excel and XML files Maintained functionality"]
+            }
+        ],
+        "start_date": "June 2021",
+        "end_date": "August 2022",
+        "location": "Walla Walla, WA"
+    }],
+    "work_experience": [{
+        "company": "Rowley's Wholesale Plant, Nursery and Produce",
+        "job_title": "Manager/Farm Hand",
+        "tasks": [
+            {
+                "task_name": null,
+                "task_description": ["Independently managed and operated heavy farm equipment including forklifts, tractors and cherry shakers","Managed 15+ workers and co-managed operations for over 1,000,000 pounds of produce annually", "Maintained functionality and sustainability of irrigation systems for over 80 acres of orchards"]
+            }
+        ],
+        "start_date": "January 2011",
+        "end_date": "August 2021",
+        "location": "Walla Walla, WA"
+    }],
+    "personal_experience": [{
+        "name": "Volunteer for The Church of Jesus Christ of Latter-day",
+        "title": "Full-Time Missionary",
+        "tasks": ["Logged over 4,000 hours of voluntarily helping strangers with an enthusiastic and compassionate attitude as I interacted with, served, and taught customized lessons", "Managed lesson planning, daily schedules, communication and travel for an area with over 10,000 people"],
+        "start_date": "August 2016",
+        "end_date": "August 2018",
+        "location": "Fort Worth Texas"    
+    }],
+    "skills": [
+        {
+            "skill_category": "Coding, Systems and Platforms",
+            "skill_description": ["Python – Object Orientated Programming, MySQL, HTML, CSS, JavaScript, Php, Java"]
+        },
+        {
+            "skill_category": "Coding Skills",
+            "skill_description": ["Language - Python, Java, C, Kotlin", "Web Development – HTML, CSS, Javascript, React Js, Node Js"]
+        },
+        {
+            "skill_category": "Systems and Platform Skills",
+            "skill_description": ["App Development – exploring Android Studio", "Operating Systems – Windows, Linux, Unix", "Cloud Platform – MongoDB", "Database – Access, Excel, Xml, SQL", "Version Controls -Git Github, Git Lab, Sourcetree"]
+        }
+    ]
+}
