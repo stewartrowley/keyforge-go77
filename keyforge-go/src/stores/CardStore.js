@@ -8,12 +8,5 @@ export const useCardStore = defineStore('CardStore', {
       }
    },
    actions: {
-      async fetchAllCards () {
-        await ApiServices.GetCards()
-        .then((response) => {
-          console.log(response.data);
-          this.allCards = response.data;
-        })
-      }
    }
 })

@@ -8,12 +8,6 @@ export const useSetStore = defineStore('SetStore', {
       }
    },
    actions: {
-      async fetchAllSets () {
-        await ApiServices.GetSets()
-        .then((response) => {
-          console.log(response.data);
-          this.allSets = response.data;
-        })
-      }
+
    }
 })

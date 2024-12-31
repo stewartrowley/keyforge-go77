@@ -8,12 +8,5 @@ export const useHouseStore = defineStore('HouseStore', {
       }
    },
    actions: {
-      async fetchAllHouses () {
-        await ApiServices.GetHouses()
-        .then((response) => {
-          console.log(response.data);
-          this.allHouses = response.data;
-        })
-      }
    }
 })

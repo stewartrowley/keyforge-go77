@@ -8,12 +8,5 @@ export const useDeckStore = defineStore('DeckStore', {
       }
    },
    actions: {
-      async fetchAllDecks () {
-        await ApiServices.GetDecks()
-        .then((response) => {
-          console.log(response.data);
-          this.allDecks = response.data;
-        })
-      }
    }
 })
