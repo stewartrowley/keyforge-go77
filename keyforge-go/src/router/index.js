@@ -4,6 +4,7 @@ import DeckView from '@/views/DeckView.vue'
 import CardView from '@/views/CardView.vue'
 import PodsView from '@/views/PodsView.vue'
 import HouseView from '@/views/HouseView.vue'
+import DeckIdView from '@/views/DeckIdView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/decks',
       name: 'deck',
       component: DeckView,
+    },
+    {
+      path: '/decks/:id',
+      name: 'deckId',
+      component: DeckIdView
     },
     {
       path: '/pods',

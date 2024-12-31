@@ -24,6 +24,7 @@ export const useHomeStore = defineStore('HomeStore', {
                   element.linked_cards = element.cards.map((item) => {
                      return useCardStore().allCards.find((card) => card._id === item)
                   })
+                  element.linked_cards.sort((a,b) => a.card_number - b.card_number);
                })
                console.log(result);
                useDeckStore().allDecks = result.data;
