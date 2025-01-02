@@ -1,18 +1,33 @@
 <template>
    <div v-if="Decks" class="deck-comp-cont">
-      <RouterLink v-for="item in Decks" :to="'/decks/' + item._id" class="deck-comp-box">
+      <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" class="deck-comp-box">
          <h3 class="deck-comp-title">{{ item.name }}</h3>
          <div class="deck-comp-icon-box">
             <img class="deck-comp-img" v-for="house in item.houses" :src="this.handleHouseIcon(house)">
          </div>
       </RouterLink>
-   </div>
+    <Pagination 
+      :total-pages="TotalPages" 
+      :current-page="currentPage" 
+      @page-change="handlePageChange" 
+    />
+  </div>
 </template>
 <script>
 import { useDeckStore } from '@/stores/DeckStore';
 import { useHouseStore } from '@/stores/HouseStore';
+import Pagination from '../Pagination.vue';
 
 export default {
+   data () {
+      return {
+         currentPage: 1,
+         perPage: 10
+      }
+   },
+   components: {
+      Pagination
+   },
    computed: {
       Decks() {
          console.log(useDeckStore().allDecks);
@@ -20,6 +35,14 @@ export default {
       },
       Houses() {
          return useHouseStore().allHouses
+      },
+      TotalPages() {
+      return Math.ceil(this.Decks.length / this.perPage);
+      },
+      PaginatedItems() {
+        const startIndex = (this.currentPage - 1) * this.perPage;
+        const endIndex = startIndex + this.perPage;
+        return this.Decks.slice(startIndex, endIndex);
       }
    },
    methods: {
@@ -28,6 +51,9 @@ export default {
             const currHouse = this.Houses.find((item) => item._id === house);
             return currHouse.image;
          }
+      },
+      handlePageChange(page) {
+         this.currentPage = page;
       }
    }
 }
