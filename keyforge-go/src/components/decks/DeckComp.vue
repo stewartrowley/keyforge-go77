@@ -2,21 +2,29 @@
    <div v-if="Decks" class="deck-comp-cont">
       <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" class="deck-comp-box">
          <h3 class="deck-comp-title">{{ item.name }}</h3>
+         <div style="display: flex; flex-direction: row; justify-content: space-between;">
+         <div class="deck-comp-group-box">
+            <h4>Box {{ item.boxNumber }} Group {{ item.group }}</h4>
+         </div>
          <div class="deck-comp-icon-box">
             <img class="deck-comp-img" v-for="house in item.houses" :src="this.handleHouseIcon(house)">
          </div>
+      </div>
       </RouterLink>
     <Pagination 
       :total-pages="TotalPages" 
       :current-page="currentPage" 
       @page-change="handlePageChange" 
     />
+    <p>Deck Count - {{ Decks.length }}</p>
+    <StandingComp v-if="Decks" />
   </div>
 </template>
 <script>
 import { useDeckStore } from '@/stores/DeckStore';
 import { useHouseStore } from '@/stores/HouseStore';
 import Pagination from '../Pagination.vue';
+import StandingComp from './StandingComp.vue';
 
 export default {
    data () {
@@ -26,7 +34,8 @@ export default {
       }
    },
    components: {
-      Pagination
+      Pagination,
+      StandingComp
    },
    computed: {
       Decks() {
@@ -86,6 +95,13 @@ export default {
    max-height: 60px;
    /* width: 150px;
    height: 100%; */
+}
+.deck-comp-group-box {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   padding-right: 10px;
 }
 .deck-comp-img {
    width: 65px;

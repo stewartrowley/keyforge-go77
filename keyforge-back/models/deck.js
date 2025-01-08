@@ -15,6 +15,8 @@ module.exports = (mongoose) => {
                 is_pending_transfer: Boolean,
                 wins: Number,
                 loses: Number,
+                boxNumber: Number,
+                group: String,
                 bonus_icons: [mongoose.SchemaTypes.Mixed],
                 set_era_cards: [mongoose.SchemaTypes.Mixed],
                 cards: [mongoose.SchemaTypes.Mixed],
