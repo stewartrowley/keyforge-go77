@@ -1,6 +1,11 @@
 <template>
    <div>
       <table>
+         <thead>
+            <tr>
+               <th v-for="item in cardHeaders" @click="this.handleSort(item)">{{ item }}</th>
+            </tr>
+         </thead>
          <tbody>
             <tr v-for="card in AllCards">
                <td>{{ card.card_title }}</td>
@@ -23,13 +28,22 @@ export default {
    components: {
       Gallery
    },
+   data () {
+      return {
+         cardHeaders: [
+            'Card Title',
+            'House',
+            'Card Type',
+            'Rarity',
+            'Quantity'
+         ]
+      }
+   },
    computed: {
       AllCards () {
-         console.log(useCardStore().allCards)
          return useCardStore().allCards;
       },
       CardCount () {
-         console.log(useCardStore().allCardsGroup);
          return useCardStore().allCardsGroup;
       }
    },
@@ -39,6 +53,11 @@ export default {
             return useCardStore().allCardsGroup[cardId].length;
          } else {
             return 0;
+         }
+      },
+      handleSort (type) {
+         if (type === 'Rarity') {
+            this.AllCards.sort((a, b) => a.rarity - b.rarity)
          }
       }
    }

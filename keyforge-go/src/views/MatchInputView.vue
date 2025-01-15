@@ -1,43 +1,43 @@
 <template>
     <div>
         <div>
-    <input type="file" multiple @change="handleFiles" />
-    <ul>
-      <li v-for="(file, index) in Files" :key="index">{{ file }}</li>
+    <label>Event</label>
+    <input type="text" @input="handleEvent">
+    <label>Upload Matches</label>
+    <input type="file" multiple @change="handleParse" />
+    <ul v-if="Files">
+      <li v-for="(file, index) in Files" :key="index">{{ file.result }}</li>
     </ul>
+    <button @click="handleSubmit">Submit</button>
   </div>
     </div>
 </template>
 <script>
+import { useDeckStore } from '@/stores/DeckStore';
+
 export default {
     data() {
     return {
-      files: []
+      files: [],
+      event: null
     };
   },
   computed: {
     Files () {
-        console.log(this.files);
         return this.files;
-    }
+      }
+
   },
   methods: {
-    handleFiles(event) {
-        const files = event.target.files; // FileList object
-
-    for (let i = 0; i < files.length; i++) {
-      if (files[i]) {
-        const reader = new FileReader();
-        var fileContent;
-        reader.onload = (e) => {
-          fileContent = e.target.result;
-        };
-        reader.readAsText(files[i]);
-        this.files.push(reader);
-      }
-    }
-    //     console.log(event.target.files);
-    //   this.files = event.target.files;
+    handleEvent(event) {
+      this.event = event.target.value;
+    },
+    handleParse (event) {
+      this.files = event.target.files;
+      useDeckStore().parseFile(this.files, this.event);
+    },
+    handleSubmit () {
+      useDeckStore().postMatches();
     }
   }
 }

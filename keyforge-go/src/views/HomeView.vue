@@ -36,9 +36,6 @@ export default {
   methods: {
     handleLink () {
       const parsedUrl = this.url.split('/')
-      console.log(parsedUrl);
-      console.log(this.boxNumber);
-      console.log(this.group);
       useHomeStore().getClientDecks(parsedUrl[4], this.boxNumber, this.group);
     }
   }

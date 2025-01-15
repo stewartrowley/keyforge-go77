@@ -39,7 +39,6 @@ export default {
    },
    computed: {
       Decks() {
-         console.log(useDeckStore().allDecks);
          return useDeckStore().allDecks;
       },
       Houses() {

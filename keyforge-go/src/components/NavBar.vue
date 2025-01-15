@@ -22,7 +22,6 @@ import { useHouseStore } from '../stores/HouseStore';
 export default {
    computed: {
       HouseData () {
-         console.log(useHouseStore().allHouses);
          return useHouseStore().allHouses;
       }
    },

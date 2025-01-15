@@ -42,12 +42,10 @@ export const useHomeStore = defineStore('HomeStore', {
       async fetchAll () {
         await ApiServices.GetCards()
         .then((response) => {
-          console.log(response.data);
           useCardStore().allCards = response.data;
           this.mainCards = response.data;
             ApiServices.GetDecks()
             .then((result) => {
-               console.log(result.data);
                var cards = [];
                result.data.forEach((element) => {
                   element.linked_cards = element.cards.map((item) => {
@@ -57,24 +55,15 @@ export const useHomeStore = defineStore('HomeStore', {
                   cards.push(...element.linked_cards);
 
                })
-               console.log(result);
                this.mainDecks = result.data.map((item) => {
                   item.boxId = item.boxNumber + item.group;
                   return item;
-               })
-               console.log(cards);
-               cards.forEach((item) => {
-                  
-                  if (item === undefined) {
-                     console.log(item);
-                  }
                })
                useDeckStore().allDecks = result.data;
                useDeckStore().deckGroups = Object.groupBy(this.mainDecks, ({ boxId }) => boxId);
                useCardStore().allCardsGroup = Object.groupBy(cards, ({_id}) => _id)
                useCardStore().allOwnedCards = Object.keys(useCardStore().allCardsGroup);
                useDeckStore().groups = Object.keys(useDeckStore().deckGroups);
-               console.log(useDeckStore().groups);
             })
         })
         await ApiServices.GetHouses()

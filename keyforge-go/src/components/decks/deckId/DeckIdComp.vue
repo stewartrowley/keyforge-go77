@@ -3,7 +3,7 @@
       <RouterLink :to="'/decks'">Return to Decks</RouterLink>
       <h1>{{ Deck.name }}</h1>
       <div>
-         <img v-for="card in Deck.linked_cards" :src="card.front_image">
+         <img v-for="card in Deck.linked_cards" :src="card.front_image" style="width: 16%;">
       </div>
    </div>
 </template>
@@ -15,9 +15,7 @@ export default {
    computed: {
       Deck () {
             const routes = useRoute();
-            console.log(routes);
             const items = routes.path.split('/');
-            console.log(items);
             if (useDeckStore().allDecks != null) {
             const deck = useDeckStore().allDecks.find((item) => item._id === items[2])
             return deck;

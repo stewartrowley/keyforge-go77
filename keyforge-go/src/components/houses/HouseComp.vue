@@ -13,9 +13,7 @@ export default {
    computed: {
       Deck () {
             const routes = useRoute();
-            console.log(routes);
             const items = routes.path.split('/');
-            console.log(items);
             if (useDeckStore().allDecks != null) {
             const deck = useDeckStore().allDecks.filter((item) => {
                if (item.houses.includes(items[2])) {

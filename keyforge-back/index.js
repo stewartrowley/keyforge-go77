@@ -19,6 +19,7 @@ db.mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
+    console.log(db.event);
     console.log('Connected to the database!');
   })
   .catch((err) => {

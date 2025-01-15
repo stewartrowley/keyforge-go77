@@ -20,7 +20,6 @@ export default {
                }
             })
             filteredCards = filteredCards.sort((a, b) => a.card_number - b.card_number)
-            console.log(filteredCards);
             return filteredCards;
          }
       }
