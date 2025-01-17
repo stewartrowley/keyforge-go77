@@ -12,7 +12,7 @@ export default {
       DeckComp
    },
    mounted () {
-      useDeckStore().getMatches('d056e059-e7be-4e8e-9480-f2448c71f7c1');
+      useDeckStore().getEvent('Season 1');
    }
 }
 </script>

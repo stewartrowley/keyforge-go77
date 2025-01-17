@@ -29,9 +29,27 @@ exports.findAll = (req, res) => {
             });
         });
 };
-exports.findId = (req, res) => {
+// exports.findId = (req, res) => {
+//     const _id = req.params._id;
+//     Event.find(
+//         { deck_id: _id }
+//     )
+//       .then((data) => {
+//         if (!data) res.status(404).send({ message: 'Not found in about' + _id });
+//         else res.send(data);
+//       })
+//       .catch((error) => {
+//         res.status(500).send({
+//           message: 'Error retrieving aboutId' + _id,
+//           error: error
+//         });
+//       });
+// };
+exports.findEvent = (req, res) => {
     const _id = req.params._id;
-    Event.find({ deck_id: _id })
+    Event.find(
+        { event_name: _id }
+    )
       .then((data) => {
         if (!data) res.status(404).send({ message: 'Not found in about' + _id });
         else res.send(data);

@@ -8,10 +8,54 @@ export const useDeckStore = defineStore('DeckStore', {
          deckGroups: null,
          groups: null,
          filesContent: [],
-         parsedData: null
+         parsedData: null,
+         deckMatches: null,
       }
    },
    actions: {
+      formDeckData () {
+         this.groups.forEach((group) => {
+            this.deckGroups[group].forEach((deck) => {
+               var deckStats = {
+                  deckName: deck.name,
+                  totalWins: 0,
+                  totalLosses: 0,
+                  homeWins: 0,
+                  homeLosses: 0,
+                  awayWins: 0,
+                  awayLosses: 0
+               };
+               deck.matches = this.deckMatches.filter((item) => {
+                  if (item.deck_id === deck._id) {
+                     if (item.deck_id === item.home_id) {
+                        if (item.home_result === 'win') {
+                           deckStats.totalWins = deckStats.totalWins + 1;
+                           deckStats.homeWins = deckStats.homeWins + 1;
+                        } else {
+                           deckStats.totalLosses = deckStats.totalLosses + 1;
+                           deckStats.homeLosses = deckStats.homeLosses + 1;
+                        }
+                     } else if (item.deck_id === item.away_id) {
+                        if (item.away_result === 'win') {
+                           deckStats.totalWins = deckStats.totalWins + 1;
+                           deckStats.awayWins = deckStats.awayWins + 1;
+                        } else {
+                           deckStats.totalLosses = deckStats.totalLosses + 1;
+                           deckStats.awayLosses = deckStats.awayLosses + 1;
+                        }
+                     }
+                     return item;
+                  }
+               });
+               deckStats.record = deckStats.totalWins + '-' + deckStats.totalLosses;
+               deckStats.homeRecord = deckStats.homeWins + '-' + deckStats.homeLosses;
+               deckStats.awayRecord = deckStats.awayWins + '-' + deckStats.awayLosses;
+               deck.deckStats = deckStats;
+            })
+         })
+         console.log(this.deckGroups);
+         return this.deckGroups;
+      },
       parseFile (files, event) {
          let matchups = [];
          for (let i = 0; i < files.length; i++) {
@@ -86,11 +130,19 @@ export const useDeckStore = defineStore('DeckStore', {
                   })
                 })
                 splitContent.forEach((line) => {
-                  players.forEach((player) => {
+                  players.forEach((player, index) => {
                      if (line.includes(player.player + ' ' + 'has won the game')) {
-                        jsonObj.home_result = 'win';
+                        if (players[index].loc === 'homeTeam') {
+                           jsonObj.home_result = 'win';
+                        } else {
+                           jsonObj.away_result = 'win';
+                        }                   
                      } else {
-                        jsonObj.away_result = 'loss'
+                        if (players[index].loc === 'homeTeam') {
+                           jsonObj.home_result = 'loss';
+                        } else {
+                           jsonObj.away_result = 'loss';
+                        } 
                      }
                   })
                 })
@@ -128,6 +180,14 @@ export const useDeckStore = defineStore('DeckStore', {
          .then((response) => {
             console.log(response.data);
          })
+      },
+      async getEvent (event) {
+         await ApiServices.GetEventMatches(event)
+         .then((response) => {
+            this.deckMatches = response.data;
+            console.log(response.data);
+         })
       }
+
    }
 })

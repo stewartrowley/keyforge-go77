@@ -26,7 +26,10 @@ export default {
       return await keyforgeClient.get('/set')
    },
    async GetMatchesById (deckId) {
-      return await keyforgeClient.get('./event/' +  deckId)
+      return await keyforgeClient.get('/event/' +  deckId)
+   },
+   async GetEventMatches (event) {
+      return await keyforgeClient.get('/event/' + event)
    },
    async PostDeck (deck) {
       return await keyforgeClient.post('/deck', deck)
