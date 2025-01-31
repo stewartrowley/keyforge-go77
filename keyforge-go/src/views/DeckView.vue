@@ -12,7 +12,7 @@ export default {
       DeckComp
    },
    mounted () {
-      useDeckStore().getEvent('Season 1');
+      useDeckStore().getEvent('season1');
    }
 }
 </script>

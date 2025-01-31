@@ -11,6 +11,8 @@ export const useHomeStore = defineStore('HomeStore', {
          isReady: false,
          mainDecks: null,
          mainCards: null,
+         mainHouses: null,
+         mainSets: null,
          isDeckSubmitted: false
       }
    },
@@ -19,6 +21,7 @@ export const useHomeStore = defineStore('HomeStore', {
          this.isDeckSubmitted = false;
          await ApiServices.GetClientDecks(deckId)
          .then((response) => {
+            console.log(response.data);
             const isDeckFound = this.mainDecks.find((item) => item._id === response.data.data.id);
             if(isDeckFound === undefined) {
                var deck = response.data.data;
@@ -34,6 +37,16 @@ export const useHomeStore = defineStore('HomeStore', {
                if (isCardFound === undefined) {
                   item._id = item.id;
                   ApiServices.PostCard(item);
+               }
+            })
+            response.data._linked.houses.forEach((item) => {
+               const isHouseFound = this.mainHouses.find((el) => el._id === item.id);
+               if (isHouseFound === undefined) {
+                  item = Object.assign({}, { _id: item.id }, item);
+                  delete item.id;
+                  item.color = '',
+                  item.banner_image = '/images/Banners/' + item.name + '_Banner.png'
+                  ApiServices.PostHouse(item);
                }
             })
             this.isDeckSubmitted = true;
@@ -68,11 +81,13 @@ export const useHomeStore = defineStore('HomeStore', {
         })
         await ApiServices.GetHouses()
         .then((response) => {
+         this.mainHouses = response.data;
          useHouseStore().allHouses = response.data;
          this.isReady = true;
         })
         await ApiServices.GetSets()
         .then((response) => {
+         this.mainSets = response.data;
          useSetStore().allSets = response.data;
         })
       }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 const keyforgeClient = axios.create(
    {
-      baseURL: 'http://localhost:8080'
+      baseURL: 'http://localhost:7050'
    }
 )
 const keyforgeApiClient = axios.create(
@@ -36,6 +36,12 @@ export default {
    },
    async PostCard (card) {
       return await keyforgeClient.post('/card', card)
+   },
+   async PostHouse (house) {
+      return await keyforgeClient.post('/house', house)
+   },
+   async PostSet (set){
+      return await keyforgeClient.post('/set', set)
    },
    async PostEvent (event) {
       return await keyforgeClient.post('./event', event)

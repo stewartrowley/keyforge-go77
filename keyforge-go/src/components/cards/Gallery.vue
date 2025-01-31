@@ -12,10 +12,13 @@ import { useCardStore } from '@/stores/CardStore';
 
 export default {
    computed: {
+      SelectedSet () {
+         return useCardStore().selectedSet;
+      },
       Cards () {
          if (useCardStore().allCards != null) {
             let filteredCards = useCardStore().allCards.filter((item) => {
-               if (item.is_maverick === false && item.expansion === 435) {
+               if (item.is_maverick === false && item.expansion == this.SelectedSet._id) {
                   return item
                }
             })

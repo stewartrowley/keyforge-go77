@@ -147,6 +147,7 @@ export const useDeckStore = defineStore('DeckStore', {
                   })
                 })
                 jsonObj.event_name = event;
+                jsonObj.event_id = (event.replaceAll(' ', '')).toLowerCase();
                 matchups.push(
                   {
                      deck_id: id[0]._id,

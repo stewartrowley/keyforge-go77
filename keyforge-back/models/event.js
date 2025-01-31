@@ -6,6 +6,7 @@ module.exports = (mongoose) => {
                 _id: String,
                 deck_id: String,
                 event_name: String,
+                event_id: String,
                 away_id: String,
                 away_team: String,
                 away_location: String,
