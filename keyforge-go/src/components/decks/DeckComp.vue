@@ -1,6 +1,7 @@
 <template>
    <div v-if="Decks" class="deck-comp-cont">
       <DeckFilter />
+      <div style="display: flex; flex-direction: column; align-items: center;">
       <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" class="deck-comp-box">
          <div class="deck-comp-icon-box">
             <img class="set-comp-img" :src="this.handleSetIcon(item.expansion)">
@@ -15,6 +16,7 @@
          </div>
       </div>
       </RouterLink>
+      </div>
     <Pagination 
       :total-pages="TotalPages" 
       :current-page="currentPage" 
@@ -98,6 +100,7 @@ export default {
    display: flex;
    flex-direction: row;
    justify-content: space-between;
+   width: 900px;
    max-height: 60px;
    margin: 10px 0px;
    align-items: center;

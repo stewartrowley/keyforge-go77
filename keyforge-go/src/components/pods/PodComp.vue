@@ -1,5 +1,6 @@
 <template>
    <div v-if="Pods" class="deck-comp-cont">
+      <PodStanding :podData="Pods"/>
       <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" :style="handlePodColor(item)" class="pod-comp-box">
          <div class="deck-comp-icon-box">
             <img class="set-comp-img" :src="this.handleSetIcon(item.expansion)">
@@ -28,6 +29,7 @@ import { useDeckStore } from '@/stores/DeckStore';
 import { useHouseStore } from '@/stores/HouseStore';
 import Pagination from '../Pagination.vue';
 import { useSetStore } from '@/stores/SetStore';
+import PodStanding from './PodStanding.vue';
 
 export default {
    data () {
@@ -41,6 +43,7 @@ export default {
    ],
    components: {
       Pagination,
+      PodStanding
    },
    computed: {
       Pods() {

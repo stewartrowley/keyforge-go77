@@ -82,44 +82,14 @@ export const useHomeStore = defineStore('HomeStore', {
                useCardStore().allCardsGroup = Object.groupBy(cards, ({_id}) => _id)
                useCardStore().allOwnedCards = Object.keys(useCardStore().allCardsGroup);
                useDeckStore().groups = Object.keys(useDeckStore().deckGroups);
-               this.mainDecks.forEach((deck) => {
-                  deck.houses.forEach ((house) => {
-                     var pod = {
-                        boxId: deck.boxId,
-                        boxNumber: deck.boxNumber,
-                        createdAt: deck.createdAt,
-                        expansion: deck.expansion,
-                        flavor_text: deck.flavor_text,
-                        group: deck.group,
-                        updatedAt: deck.updatedAt,
-                        _id: deck._id,
-                        name: deck.name,
-   
-                     }
-                     const podCards = deck.linked_cards.filter((el) => {
-                        if (el.house == house) {
-                           const podFind = useHouseStore().allHouses.find((item) => item.name == el.house)
-                           pod.house_image = podFind.image;
-                           pod.house_color = podFind.color;
-                           return el
-                        }
-                     })
-                     if (podCards.length === 0) {
-                        console.log(deck);
-                     }
-                     pod.cards = podCards;
-                     pod.house = podCards[0].house;
-                     usePodStore().allPods.push(pod);
-                     
-                  })
-               });
+               ApiServices.GetHouses()
+               .then((response) => {
+                this.mainHouses = response.data;
+                useHouseStore().allHouses = response.data;
+                usePodStore().setPods(result.data);
+                this.isReady = true;
+               })
             })
-        })
-        await ApiServices.GetHouses()
-        .then((response) => {
-         this.mainHouses = response.data;
-         useHouseStore().allHouses = response.data;
-         this.isReady = true;
         })
         await ApiServices.GetSets()
         .then((response) => {
