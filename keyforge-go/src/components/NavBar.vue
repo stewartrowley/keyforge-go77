@@ -80,7 +80,7 @@ export default {
  flex-direction: row;
 }
 .nav-icon-house {
- width: 70%;
+ width: 40px;
 }
 .nav-icon-row {
  display: flex;

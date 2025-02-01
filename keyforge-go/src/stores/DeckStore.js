@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import ApiServices from "@/services/ApiServices";
+import { useSetStore } from "./SetStore";
 
 export const useDeckStore = defineStore('DeckStore', {
    state () {
@@ -10,9 +11,69 @@ export const useDeckStore = defineStore('DeckStore', {
          filesContent: [],
          parsedData: null,
          deckMatches: null,
+         selectedSets: [
+            {
+                "_id": "435",
+                "name": "Age of Ascension",
+                "houses": [
+                    "Brobnar",
+                    "Dis",
+                    "Logos",
+                    "Mars",
+                    "Sanctum",
+                    "Shadows",
+                    "Mars"
+                ],
+                "image": "https://archonarcana.com/images/thumb/c/c6/Starter-aoa.jpg/250px-Starter-aoa.jpg",
+                "code": "AoA"
+            },
+            {
+                "_id": "700",
+                "name": "Grim Reminders",
+                "houses": [
+                    "Brobnar",
+                    "Ekwidon",
+                    "Geistoid",
+                    "Mars",
+                    "Star Alliance",
+                    "Unfathomable",
+                    "Untamed"
+                ],
+                "image": "https://archonarcana.com/images/thumb/c/c3/Starter-GR.jpg/375px-Starter-GR.jpg",
+                "code": "GR"
+            },
+            {
+                "_id": "800",
+                "name": "Æmber Skies",
+                "houses": [
+                    "Brobnar",
+                    "Dis",
+                    "Ekwidon",
+                    "Geistoid",
+                    "Logos",
+                    "Mars",
+                    "Skyborn"
+                ],
+                "image": "https://archonarcana.com/images/thumb/d/d5/Starter-AS.jpg/375px-Starter-AS.jpg",
+                "code": "AS"
+            }
+        ]
       }
    },
    actions: {
+      allSelectedSets () {
+         console.log(this.allDecks);
+         const decks = this.allDecks.filter((item) => {
+            console.log(item);
+            const isSet = this.selectedSets.find((e) => e._id == item.expansion);
+            console.log(isSet);
+            if (isSet) {
+               return item;
+            }
+         })
+         console.log(decks);
+         return decks;
+      },
       formDeckData () {
          this.groups.forEach((group) => {
             this.deckGroups[group].forEach((deck) => {

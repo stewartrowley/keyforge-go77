@@ -31,7 +31,7 @@ export const useHomeStore = defineStore('HomeStore', {
                deck.group = group;
                deck.cards = response.data.data._links.cards;
                deck.houses = response.data.data._links.houses
-               // ApiServices.PostDeck(deck);
+               ApiServices.PostDeck(deck);
             }
             response.data._linked.cards.forEach((item) => {
                console.log(this.mainCards);
@@ -98,6 +98,9 @@ export const useHomeStore = defineStore('HomeStore', {
                      }
                      const podCards = deck.linked_cards.filter((el) => {
                         if (el.house == house) {
+                           const podFind = useHouseStore().allHouses.find((item) => item.name == el.house)
+                           pod.house_image = podFind.image;
+                           pod.house_color = podFind.color;
                            return el
                         }
                      })
@@ -121,6 +124,9 @@ export const useHomeStore = defineStore('HomeStore', {
         await ApiServices.GetSets()
         .then((response) => {
          this.mainSets = response.data;
+         this.mainSets.forEach((item) => {
+            item.checked = true;
+         })
          useSetStore().allSets = response.data;
         })
       }

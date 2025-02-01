@@ -6,18 +6,17 @@
             {{ set.name }}
          </div>
       </div>
-      <div>
-         <div v-for="pod in Pods">
-            <h3>{{ pod.name }}</h3>
-            <p>{{ pod.house }}</p>
-         </div>
-      </div>
+      <PodComp :pods="Pods"/>
    </div>
 </template>
 <script>
 import { usePodStore } from '@/stores/PodStore';
 import { useSetStore } from '@/stores/SetStore';
+import PodComp from '@/components/pods/PodComp.vue';
 export default {
+   components: {
+      PodComp
+   },
    computed: {
       Pods () {
          console.log(usePodStore().allPods);

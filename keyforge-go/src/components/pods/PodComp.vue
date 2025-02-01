@@ -1,7 +1,6 @@
 <template>
-   <div v-if="Decks" class="deck-comp-cont">
-      <DeckFilter />
-      <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" class="deck-comp-box">
+   <div v-if="Pods" class="deck-comp-cont">
+      <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" :style="handlePodColor(item)" class="pod-comp-box">
          <div class="deck-comp-icon-box">
             <img class="set-comp-img" :src="this.handleSetIcon(item.expansion)">
             <h3 class="deck-comp-title">{{ item.name }}</h3>
@@ -11,7 +10,7 @@
             <h4>Box {{ item.boxNumber }} Group {{ item.group }}</h4>
          </div>
          <div class="deck-comp-icon-box">
-            <img class="deck-comp-img" v-for="house in item.houses" :src="this.handleHouseIcon(house)">
+            <img class="deck-comp-img" :src="item.house_image">
          </div>
       </div>
       </RouterLink>
@@ -20,7 +19,7 @@
       :current-page="currentPage" 
       @page-change="handlePageChange" 
     />
-    <p>Deck Count - {{ Decks.length }}</p>
+    <p>Pods Count - {{ Pods.length }}</p>
     <!-- <StandingComp v-if="Decks" /> -->
   </div>
 </template>
@@ -28,8 +27,6 @@
 import { useDeckStore } from '@/stores/DeckStore';
 import { useHouseStore } from '@/stores/HouseStore';
 import Pagination from '../Pagination.vue';
-import StandingComp from './StandingComp.vue';
-import DeckFilter from './DeckFilter.vue';
 import { useSetStore } from '@/stores/SetStore';
 
 export default {
@@ -39,16 +36,15 @@ export default {
          perPage: 10
       }
    },
+   props: [
+      'pods'
+   ],
    components: {
       Pagination,
-      StandingComp,
-      DeckFilter
    },
    computed: {
-      Decks() {
-         if (useDeckStore().allDecks != null) {
-         return useDeckStore().allSelectedSets();
-         }
+      Pods() {
+         return this.$props.pods;
          // return useDeckStore().allDecks;
       },
       Houses() {
@@ -60,12 +56,12 @@ export default {
          }
       },
       TotalPages() {
-      return Math.ceil(this.Decks.length / this.perPage);
+      return Math.ceil(this.Pods.length / this.perPage);
       },
       PaginatedItems() {
         const startIndex = (this.currentPage - 1) * this.perPage;
         const endIndex = startIndex + this.perPage;
-        return this.Decks.slice(startIndex, endIndex);
+        return this.Pods.slice(startIndex, endIndex);
       }
    },
    methods: {
@@ -82,6 +78,11 @@ export default {
             return currSet.image;
          }
       },
+      handlePodColor (pod) {
+         return {
+            'background-color': pod.house_color
+         }
+      },
       handlePageChange(page) {
          this.currentPage = page;
       }
@@ -94,7 +95,7 @@ export default {
    flex-direction: column;
    padding: 0px 10px;
 }
-.deck-comp-box {
+.pod-comp-box {
    display: flex;
    flex-direction: row;
    justify-content: space-between;
@@ -104,11 +105,11 @@ export default {
    border: 1px solid black;
    color: #FFFFFF;
    padding: 0px;
-   background: hsla(213, 77%, 14%, 1);
+   /* background: hsla(213, 77%, 14%, 1);
    background: linear-gradient(90deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
    background: -moz-linear-gradient(90deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
    background: -webkit-linear-gradient(90deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
-   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
+   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 ); */
 }
 .deck-comp-icon-box{
    display: flex;
