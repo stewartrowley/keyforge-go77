@@ -6,6 +6,7 @@ module.exports = (mongoose) => {
                 _id: String,
                 card_title: String,
                 card_title_en: String,
+                house: String,
                 card_type: String,
                 front_image: String,
                 card_text: String,

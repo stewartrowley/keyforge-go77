@@ -4,6 +4,7 @@ import { useDeckStore } from "./DeckStore";
 import { useCardStore } from "./CardStore";
 import { useHouseStore } from "./HouseStore";
 import { useSetStore } from "./SetStore";
+import { usePodStore } from "./PodStore";
 
 export const useHomeStore = defineStore('HomeStore', {
    state () {
@@ -30,12 +31,16 @@ export const useHomeStore = defineStore('HomeStore', {
                deck.group = group;
                deck.cards = response.data.data._links.cards;
                deck.houses = response.data.data._links.houses
-               ApiServices.PostDeck(deck);
+               // ApiServices.PostDeck(deck);
             }
             response.data._linked.cards.forEach((item) => {
-               const isCardFound = this.mainCards.find((el) => el._id === item.id)
+               console.log(this.mainCards);
+               console.log(item.house);
+               const isCardFound = this.mainCards.find((el) => el._id == item.id)
                if (isCardFound === undefined) {
                   item._id = item.id;
+                  item.house = item.house
+                  console.log(item);
                   ApiServices.PostCard(item);
                }
             })
@@ -77,6 +82,34 @@ export const useHomeStore = defineStore('HomeStore', {
                useCardStore().allCardsGroup = Object.groupBy(cards, ({_id}) => _id)
                useCardStore().allOwnedCards = Object.keys(useCardStore().allCardsGroup);
                useDeckStore().groups = Object.keys(useDeckStore().deckGroups);
+               this.mainDecks.forEach((deck) => {
+                  deck.houses.forEach ((house) => {
+                     var pod = {
+                        boxId: deck.boxId,
+                        boxNumber: deck.boxNumber,
+                        createdAt: deck.createdAt,
+                        expansion: deck.expansion,
+                        flavor_text: deck.flavor_text,
+                        group: deck.group,
+                        updatedAt: deck.updatedAt,
+                        _id: deck._id,
+                        name: deck.name,
+   
+                     }
+                     const podCards = deck.linked_cards.filter((el) => {
+                        if (el.house == house) {
+                           return el
+                        }
+                     })
+                     if (podCards.length === 0) {
+                        console.log(deck);
+                     }
+                     pod.cards = podCards;
+                     pod.house = podCards[0].house;
+                     usePodStore().allPods.push(pod);
+                     
+                  })
+               });
             })
         })
         await ApiServices.GetHouses()

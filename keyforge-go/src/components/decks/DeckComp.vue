@@ -1,5 +1,6 @@
 <template>
    <div v-if="Decks" class="deck-comp-cont">
+      <DeckFilter />
       <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" class="deck-comp-box">
          <h3 class="deck-comp-title">{{ item.name }}</h3>
          <div style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -17,7 +18,7 @@
       @page-change="handlePageChange" 
     />
     <p>Deck Count - {{ Decks.length }}</p>
-    <StandingComp v-if="Decks" />
+    <!-- <StandingComp v-if="Decks" /> -->
   </div>
 </template>
 <script>
@@ -25,6 +26,7 @@ import { useDeckStore } from '@/stores/DeckStore';
 import { useHouseStore } from '@/stores/HouseStore';
 import Pagination from '../Pagination.vue';
 import StandingComp from './StandingComp.vue';
+import DeckFilter from './DeckFilter.vue';
 
 export default {
    data () {
@@ -35,7 +37,8 @@ export default {
    },
    components: {
       Pagination,
-      StandingComp
+      StandingComp,
+      DeckFilter
    },
    computed: {
       Decks() {

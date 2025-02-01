@@ -44,6 +44,9 @@ export default {
       return await keyforgeClient.post('/set', set)
    },
    async PostEvent (event) {
-      return await keyforgeClient.post('./event', event)
-   } 
+      return await keyforgeClient.post('/event', event)
+   },
+   async UpdateCard (card) {
+      return await keyforgeClient.put('/card/' + card._id, card)
+   }
 }
