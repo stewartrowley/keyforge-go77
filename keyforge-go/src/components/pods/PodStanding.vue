@@ -1,74 +1,117 @@
 <template>
-    <div>
-        <table>
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div style="max-width: 1100px;">
+        <table style="width: 100%;">
             <thead>
                 <tr>
-                    <td v-for="item in PodHeaders" @click="handlePodSort(item)">{{ item.title }}</td>
+                    <th v-for="item in PodHeaders" @click="handlePodSort(item)" style="cursor: pointer; background-color: #fed73b;">{{ item.title }} <img
+                            v-if="item.isSorted === true" style="width: 13px; rotate: 180deg;"
+                            src="../../../public/icons/arrow.svg"><img v-if="item.isSorted === false"
+                            style="width: 13px;" src="../../../public/icons/arrow.svg"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pod in Pods">
-                    <td>{{ pod.name }}</td>
-                    <td>{{ pod.house }}</td>
-                    <td>{{ pod.creatureCount }}</td>
-                    <td>{{ pod.actionCount }}</td>
-                    <td>{{ pod.upgradeCount }}</td>
-                    <td>{{ pod.artifactCount }}</td>
-                    <td>{{ pod.powerCount}}</td>
-                    <td>{{ pod.armorCount }}</td>
-                    <td>{{ pod.amberCount }}</td>
+                <tr style="text-align: center;" v-for="pod in PaginatedItems">
+                    <td :style="podTableColor(pod.house_color)">{{ pod.name }}</td>
+                    <td class="pod-normal-td" style="height: 35px;"><img style="height: 100%" :src="pod.house_image"></td>
+                    <td class="pod-normal-td">{{ pod.creatureCount }}</td>
+                    <td class="pod-normal-td">{{ pod.actionCount }}</td>
+                    <td class="pod-normal-td">{{ pod.upgradeCount }}</td>
+                    <td class="pod-normal-td">{{ pod.artifactCount }}</td>
+                    <td class="pod-normal-td">{{ pod.powerCount }}</td>
+                    <td class="pod-normal-td">{{ pod.armorCount }}</td>
+                    <td class="pod-normal-td">{{ pod.amberCount }}</td>
                 </tr>
             </tbody>
         </table>
+        <Pagination :total-pages="TotalPages" :current-page="currentPage" @page-change="handlePageChange" />
     </div>
+  </div>
 </template>
 <script>
 import { usePodStore } from '@/stores/PodStore';
-
+import Pagination from '../Pagination.vue';
 export default {
-    data () {
+    data() {
         return {
             podHeaders: [
-                {title: 'Deck Name', value: 'name', isSorted: false},
-                {title: 'House', value: 'house', isSorted: false},
-                {title: 'Creature #', value: 'creatureCount', isSorted: false},
-                {title: 'Action #', value: 'actionCount', isSorted: false},
-                {title: 'Upgrade #', value: 'upgradeCount', isSorted: false},
-                {title: 'Artifact #', value: 'artifactCount', isSorted: false},
-                {title: 'Total Power', value: 'powerCount', isSorted: false},
-                {title: 'Total Armor', value: 'armorCount', isSorted: false},
-                {title: 'Bonus Aember', value: 'amberCount', isSorted: false}
+                { title: 'Deck Name', value: 'name', isSorted: false },
+                { title: 'House', value: 'house', isSorted: false },
+                { title: 'Creature #', value: 'creatureCount', isSorted: false },
+                { title: 'Action #', value: 'actionCount', isSorted: false },
+                { title: 'Upgrade #', value: 'upgradeCount', isSorted: false },
+                { title: 'Artifact #', value: 'artifactCount', isSorted: false },
+                { title: 'Total Power', value: 'powerCount', isSorted: false },
+                { title: 'Total Armor', value: 'armorCount', isSorted: false },
+                { title: 'Bonus Aember', value: 'amberCount', isSorted: false }
             ],
-            pods: null
+            pods: null,
+            currentPage: 1,
+            perPage: 10
         }
     },
+    components: {
+        Pagination
+    },
     computed: {
-        Pods () {
+        Pods() {
             this.pods = this.$props.podData
             return this.pods;
         },
-        PodHeaders () {
+        PodHeaders() {
             return this.podHeaders;
         },
+        TotalPages() {
+            return Math.ceil(this.Pods.length / this.perPage);
+        },
+        PaginatedItems() {
+            const startIndex = (this.currentPage - 1) * this.perPage;
+            const endIndex = startIndex + this.perPage;
+            return this.Pods.slice(startIndex, endIndex);
+        }
     },
     props: [
         'podData'
     ],
     methods: {
-        handlePodSort (type) {
+        podTableColor(color) {
+            console.log(color);
+            return {
+                'color': 'white',
+                'background-color': color
+            }
+        },
+        handlePodSort(type) {
             console.log(type);
             if (type.isSorted) {
-                        console.log('it happened')
-                        this.pods = this.pods.sort((a, b) => a[type.value] - b[type.value]);
-                    } else {
-                        this.pods = this.pods.sort((a, b) => b[type.value] - a[type.value]);
-                    }
-                    console.log(type.isSorted);
-                    type.isSorted = type.isSorted === true ? false : true;
+                console.log('it happened')
+                if (type.value === 'name' || type.value === 'house') {
+                  console.log(type.value);
+                  this.pods = this.pods.sort((a, b) => a[type.value].localeCompare(b[type.value]));
+                }
+                this.pods = this.pods.sort((a, b) => a[type.value] - b[type.value]);
+            } else {
+              if (type.value === 'name' || type.value === 'house') {
+                console.log(type.value);
+                  this.pods = this.pods.sort((a, b) => b[type.value].localeCompare(a[type.value]));
+                }
+                this.pods = this.pods.sort((a, b) => b[type.value] - a[type.value]);
+            }
+            console.log(type.isSorted);
+            type.isSorted = type.isSorted === true ? false : true;
+        },
+        handlePageChange(page) {
+            this.currentPage = page;
         }
     }
 }
 </script>
-<style lang="">
-    
+<style>
+td {
+    padding: 0;
+}
+
+.pod-normal-td {
+    background-color: silver;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-   <div v-if="Pods" class="deck-comp-cont">
+   <div v-if="Pods" class="pod-comp-cont">
       <PodStanding :podData="Pods"/>
       <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" :style="handlePodColor(item)" class="pod-comp-box">
          <div class="deck-comp-icon-box">
@@ -93,7 +93,7 @@ export default {
 }
 </script>
 <style scoped>
-.deck-comp-cont {
+.pod-comp-cont {
    display: flex;
    flex-direction: column;
    padding: 0px 10px;
