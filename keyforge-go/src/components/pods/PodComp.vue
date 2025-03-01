@@ -2,16 +2,16 @@
    <div v-if="Pods" class="pod-comp-cont">
       <PodStanding :podData="Pods"/>
       <RouterLink v-for="item in PaginatedItems" :to="'/decks/' + item._id" :style="handlePodColor(item)" class="pod-comp-box">
-         <div class="deck-comp-icon-box">
+         <div class="pod-comp-icon-box">
             <img class="set-comp-img" :src="this.handleSetIcon(item.expansion)">
-            <h3 class="deck-comp-title">{{ item.name }}</h3>
+            <h3 class="pod-comp-title">{{ item.name }}</h3>
          </div>
          <div style="display: flex; flex-direction: row; justify-content: space-between;">
-         <div class="deck-comp-group-box">
+         <div class="pod-comp-group-box">
             <h4>Box {{ item.boxNumber }} Group {{ item.group }}</h4>
          </div>
-         <div class="deck-comp-icon-box">
-            <img class="deck-comp-img" :src="item.house_image">
+         <div class="pod-comp-icon-box">
+            <img class="pod-comp-img" :src="item.house_image">
          </div>
       </div>
       </RouterLink>
@@ -114,7 +114,7 @@ export default {
    background: -webkit-linear-gradient(90deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 ); */
 }
-.deck-comp-icon-box{
+.pod-comp-icon-box{
    display: flex;
    flex-direction: row;
    align-items: center;
@@ -122,14 +122,14 @@ export default {
    /* width: 150px;
    height: 100%; */
 }
-.deck-comp-group-box {
+.pod-comp-group-box {
    display: flex;
    flex-direction: row;
    align-items: center;
    justify-content: center;
    padding-right: 10px;
 }
-.deck-comp-img {
+.pod-comp-img {
    width: 65px;
    height: 65px;
 }
@@ -137,7 +137,7 @@ export default {
    width: 60px;
    height: 60px;
 }
-.deck-comp-title {
+.pod-comp-title {
    padding-left: 10px;
 }
 </style>

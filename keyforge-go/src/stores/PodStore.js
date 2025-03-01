@@ -23,7 +23,7 @@ export const usePodStore = defineStore('PodStore', {
         return pod;
     },
     setPods (data) {
-      console.log('hap')
+      console.log(data)
       data.forEach((deck) => {
          deck.houses.forEach ((house) => {
             var pod = {
@@ -61,6 +61,7 @@ export const usePodStore = defineStore('PodStore', {
       });
     },
     setPodStats (cards) {
+      console.log(cards);
          var pod = {};
          pod.creatureCount = 0;
          pod.actionCount  = 0;
@@ -85,7 +86,11 @@ export const usePodStore = defineStore('PodStore', {
                   pod.artifactCount = pod.artifactCount + 1;
                   break;
             }
-            pod.powerCount = pod.powerCount + JSON.parse(el.power);
+            if(el.power == 'X') {
+               pod.powerCount = pod.powerCount + 0;
+            } else {
+               pod.powerCount = pod.powerCount + JSON.parse(el.power);
+            }
             pod.armorCount = pod.armorCount + JSON.parse(el.armor);
             pod.amberCount = pod.amberCount + JSON.parse(el.amber);
          });

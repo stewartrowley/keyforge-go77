@@ -22,6 +22,7 @@
             </tr>
          </tbody>
       </table> -->
+      <CardFilter />
       <Gallery />
    </div>
 </template>
