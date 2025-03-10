@@ -21,7 +21,7 @@
          <Pagination :total-pages="TotalPages" :current-page="currentPage" @page-change="handlePageChange" />
          <p>Deck Count - {{ Decks.length }}</p>
       </div>
-      <!-- <StandingComp v-if="Decks" /> -->
+      <StandingComp v-if="Decks" />
    </div>
 </template>
 <script>
@@ -76,7 +76,6 @@ export default {
          }
       },
       handleSetIcon(setId) {
-         console.log(this.Sets);
          if (this.Sets != null) {
             const currSet = this.Sets.find((item) => item._id == setId);
             return currSet.image;

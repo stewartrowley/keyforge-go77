@@ -37,7 +37,8 @@ export default {
       useDeckStore().parseFile(this.files, this.event);
     },
     handleSubmit () {
-      useDeckStore().postMatches();
+      // useDeckStore().postMatches();
+      console.log('submit');
     }
   }
 }

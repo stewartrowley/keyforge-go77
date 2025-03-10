@@ -58,7 +58,6 @@ export default {
       },
       selectedSet: {
          get() {
-            console.log(useCardStore().selectedSet);
             return useCardStore().selectedSet;
          },
          set (value) {

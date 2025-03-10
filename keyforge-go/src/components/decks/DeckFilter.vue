@@ -34,7 +34,6 @@ export default {
     methods: {
         submit() {
           useDeckStore().selectedSets = this.Sets.filter(item => item.checked);
-          console.log('Selected items:', selectedItems);
         }
     }
 }

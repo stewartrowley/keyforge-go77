@@ -34,13 +34,10 @@ export const useHomeStore = defineStore('HomeStore', {
                ApiServices.PostDeck(deck);
             }
             response.data._linked.cards.forEach((item) => {
-               console.log(this.mainCards);
-               console.log(item.house);
                const isCardFound = this.mainCards.find((el) => el._id == item.id)
                if (isCardFound === undefined) {
                   item._id = item.id;
                   item.house = item.house
-                  console.log(item);
                   ApiServices.PostCard(item);
                }
             })
@@ -78,7 +75,20 @@ export const useHomeStore = defineStore('HomeStore', {
                   return item;
                })
                useDeckStore().allDecks = result.data;
-               useDeckStore().deckGroups = Object.groupBy(this.mainDecks, ({ boxId }) => boxId);
+               console.log(this.mainDecks);
+               const setGroups = Object.groupBy(this.mainDecks, ({ expansion }) => expansion);
+               useSetStore().setDeckGroups = Object.keys(setGroups);
+                const newGroup = useSetStore().setDeckGroups.map((exp) => {
+                  const obj = {};
+                  const group = Object.groupBy(setGroups[exp], ({ boxId }) => boxId);
+                  obj.set = exp;
+                  obj.groupKeys = Object.keys(group);
+                  obj.groups = group;
+
+                  return obj; 
+               })
+               console.log(newGroup);
+               useDeckStore().deckGroups = newGroup;
                useCardStore().allCardsGroup = Object.groupBy(cards, ({_id}) => _id)
                useCardStore().allOwnedCards = Object.keys(useCardStore().allCardsGroup);
                useDeckStore().groups = Object.keys(useDeckStore().deckGroups);
@@ -98,6 +108,7 @@ export const useHomeStore = defineStore('HomeStore', {
             item.checked = true;
          })
          useSetStore().allSets = response.data;
+         useDeckStore().selectedSets = response.data;
         })
       }
    }

@@ -4,7 +4,8 @@ import ApiServices from "@/services/ApiServices";
 export const useSetStore = defineStore('SetStore', {
    state () {
       return {
-         allSets: null
+         allSets: null,
+         setDeckGroups: null
       }
    },
    actions: {

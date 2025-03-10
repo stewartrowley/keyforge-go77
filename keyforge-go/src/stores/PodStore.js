@@ -12,18 +12,14 @@ export const usePodStore = defineStore('PodStore', {
    },
    actions: {
     podSet (set) {
-      console.log(set);
-      console.log(this.allPods);
         const pod = this.allPods.filter((item) => {
          if (item.expansion == set._id) {
             return item;
          }
         });
-        console.log(pod);
         return pod;
     },
     setPods (data) {
-      console.log(data)
       data.forEach((deck) => {
          deck.houses.forEach ((house) => {
             var pod = {
@@ -61,7 +57,6 @@ export const usePodStore = defineStore('PodStore', {
       });
     },
     setPodStats (cards) {
-      console.log(cards);
          var pod = {};
          pod.creatureCount = 0;
          pod.actionCount  = 0;
@@ -73,7 +68,6 @@ export const usePodStore = defineStore('PodStore', {
          cards.forEach((el) => {
             switch (el.card_type) {
                case 'Creature':
-                  console.log('it happened')
                   pod.creatureCount = pod.creatureCount + 1;
                   break;
                case 'Action':

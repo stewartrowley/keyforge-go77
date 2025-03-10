@@ -62,21 +62,18 @@ export const useDeckStore = defineStore('DeckStore', {
    },
    actions: {
       allSelectedSets () {
-         console.log(this.allDecks);
          const decks = this.allDecks.filter((item) => {
-            console.log(item);
             const isSet = this.selectedSets.find((e) => e._id == item.expansion);
-            console.log(isSet);
             if (isSet) {
                return item;
             }
          })
-         console.log(decks);
          return decks;
       },
       formDeckData () {
-         this.groups.forEach((group) => {
-            this.deckGroups[group].forEach((deck) => {
+         this.deckGroups.forEach((el) => {
+         el.groupKeys.forEach((group) => {
+            el.groups[group].forEach((deck) => {
                var deckStats = {
                   deckName: deck.name,
                   totalWins: 0,
@@ -114,6 +111,7 @@ export const useDeckStore = defineStore('DeckStore', {
                deck.deckStats = deckStats;
             })
          })
+      })
          console.log(this.deckGroups);
          return this.deckGroups;
       },
@@ -204,6 +202,10 @@ export const useDeckStore = defineStore('DeckStore', {
                         } else {
                            jsonObj.away_result = 'loss';
                         } 
+                     }
+
+                     if (line.includes(player.player + ':')) {
+                        console.log(line.match(/-?\d+(\.\d+)?/g));
                      }
                   })
                 })

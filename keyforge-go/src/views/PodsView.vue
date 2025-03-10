@@ -19,7 +19,6 @@ export default {
    },
    computed: {
       Pods () {
-         console.log(usePodStore().allPods);
          if (usePodStore().allPods.length > 0) {
          return usePodStore().podSet(this.selectedSet)
          }
@@ -29,7 +28,6 @@ export default {
       },
       selectedSet: {
          get() {
-            console.log(usePodStore().selectedSet);
             return usePodStore().selectedSet;
          },
          set (value) {

@@ -75,29 +75,23 @@ export default {
     ],
     methods: {
         podTableColor(color) {
-            console.log(color);
             return {
                 'color': 'white',
                 'background-color': color
             }
         },
         handlePodSort(type) {
-            console.log(type);
             if (type.isSorted) {
-                console.log('it happened')
                 if (type.value === 'name' || type.value === 'house') {
-                  console.log(type.value);
                   this.pods = this.pods.sort((a, b) => a[type.value].localeCompare(b[type.value]));
                 }
                 this.pods = this.pods.sort((a, b) => a[type.value] - b[type.value]);
             } else {
               if (type.value === 'name' || type.value === 'house') {
-                console.log(type.value);
                   this.pods = this.pods.sort((a, b) => b[type.value].localeCompare(a[type.value]));
                 }
                 this.pods = this.pods.sort((a, b) => b[type.value] - a[type.value]);
             }
-            console.log(type.isSorted);
             type.isSorted = type.isSorted === true ? false : true;
         },
         handlePageChange(page) {

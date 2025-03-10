@@ -47,8 +47,9 @@ exports.findAll = (req, res) => {
 // };
 exports.findEvent = (req, res) => {
     const _id = req.params._id;
+    console.log(_id)
     Event.find(
-        { event_name: _id }
+        { event_id: _id }
     )
       .then((data) => {
         if (!data) res.status(404).send({ message: 'Not found in about' + _id });
